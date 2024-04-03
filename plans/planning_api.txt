@@ -1,0 +1,118 @@
+Какую DB logic надо:
+1. cart
+2. user's lookbook(liked products)
+3. products lookbook
+
+Table Models:
+
+# --- Lookbook tables logic ---
+products: {
+  id int AUTO_INCREMENT,
+  title varchar(50),
+  # image_refs: Array of Strings,
+  availability Bool,
+  description text,
+  # color Array of Strings,
+  PRIMARY KEY (id),
+}
+
+products_images_refs: {
+  product_id int,
+  image_ref tinytext,
+  FOREIGN KEY (product_id) REFERENCES product(id)
+}
+
+products_colors: {
+  product_id int,
+  color varchar(20),
+  FOREIGN KEY (color) REFERENCES products(id)
+}
+# --- Lookbook tables logic ---
+
+# --- User's Lookbook tables logic ---
+liked_products: {
+  id int AUTO_INCREMENT,
+  user_id int,
+  product_id int,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id, product_id),
+}
+* On pressing button of "like" image on the client, the request to add/remove a product to liked ones is sent.
+  Adding: create new row in liked_products
+  Removing: drop a row with specified: user_id(who dislikes a product) and product_id(what product is to remove from liked)
+# --- User's Lookbook tables logic ---
+
+# --- Cart tables logic ---
+carts_products {
+  id int AUTO_INCREMENT,
+  product_id int,
+  user_cart_id int, # user's id identifing the cart's id
+  amount int,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_cart_id) REFERENCES users(id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
+}
+# --- Cart tables logic ---
+
+users: {
+  id int AUTO_INCREMENT,
+  email varchar(50) Not Null,
+  name varchar(50),
+  password varchar(50),
+  PRIMARY KEY (id),
+  UNIQUE (email)
+}
+
+API Endpoints:
+
+1. /api/auth
+
+endp. 1.1: /api/auth/sign-in
+logic: если email и password пользователя норм, возвращаем jwt token, в котором: {
+  user_id,
+  user_email,
+  user_name,
+}; если что-то не подходит, возвращаем соотественно ошибки, оповещающие текстом, что конкретно неправильно введено, с кодом 403(HTTP status code: invalid format - invalid client requests)
+req: { email, password, }
+res: { jwt_token: String }
+query: [
+  'SELECT user.email, user.password FROM users WHERE email = ' + user.email(принимаем два поля у пользователя, чтобы их сравнить и на их основе сформировать JWT токен),
+  'SELECT user.id FROM users WHERE email = ' + user.email,
+]
+
+endp. 1.2: /api/auth/sign-up
+logic: если всё норм с запросом, создаём нового пользователя в бд
+req: { email, name, password, }
+res: проверять на уникальность почты и придумать валидацию пароля
+if всё успешно:
+  code(200) and redirect(/)
+else:
+  code(403)
+query: 'INSERT INTO users VALUES (0, ' + user.email + ', ' + user.name + ', ' + hashedPwd + ')';(при успешной проверке пароля, захешировать пароль и закинуть в ДБ)
+
+2. /api/products
+
+endp. 2.1: /api/products/get-filtered-products
+logic: возвращает отфильтрованные по указанным полям(пока просто по названию) продукты
+req: { filters: { title, } }
+res: { filtered_products: Array of products }
+query: 'SELECT * FROM products WHERE instr(title, ' + filters.title + ') > 0'
+
+endp. 2.2: /api/products/get-all-products
+logic: возвращает все продукты, хранящиеся в БД
+req: {}
+res: { products: Array of products }
+query: 'SELECT * FROM products'
+
+endp. 2.3: /api/products/get-liked-products
+logic: возвращает продукты, понравившиеся пользователю
+req: { user_id: int, }
+res: { liked_products: Array of products }
+query: 'SELECT * FROM liked_products JOINS ...'
+
+3. /api/cart
+
+endp. 3.1: /api/cart/get-cart-products
+req: {  }
+res: {  }
+query: 'SELECT * FROM carts_products JOINS ...'

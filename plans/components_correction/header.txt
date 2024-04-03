@@ -1,0 +1,9 @@
+1. remove currency
+2. links:
+  register, sign in, h1, navbars' links, 
+3. buttons:
+  cart
+4. inputs:
+  search bar
+5. divs:
+  autumn sale!

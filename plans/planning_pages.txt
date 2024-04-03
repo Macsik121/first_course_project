@@ -1,0 +1,88 @@
+Сайт по продаже мерча ИВТиПТ.
+
+
+Элементы дизайна, относящиеся ко всем страницам:
+1. header:
+  highest line(where sign in button is), navbar
+    1.1. highest line: самая верхняя полоска, кроме: currency
+    1.2. navbar: 1) главная 2) продукты 3) команда 4) форма регистрации и входа
+2. footer:
+  website and third party services refs, social media refs, lowest line
+    2.1. refs about website and third party services:
+      2.1.1. information: team, contact us
+      2.1.2. your account: sign in/up, view cart, view your lookbook
+      2.1.3. lookbook: products lookbook, view your lookbook
+      2.1.4. contact details: headoffice: ИВТиПТ, Мильчакова, 8а; telephone: +7 (988) 890-30-31; email: external_mail_for_site@mail.ru;
+    2.2. social media refs: vk, telegram, whatsapp
+    2.3. lowest line: copyright Next Gen Gear, design by: vk.com/s_i_l_s_i_l, dev by: vk.com/meranmadeaheat, vk.com/bulbulbulbulbu1
+
+
+Страницы/компоненты:
+1. главная(/)
+  контент:
+    header
+    ?1.1? search for products, people to contact
+    1.2. homepage products: нет фильтрации по популярности, лучшего продавца и т.д, как на макете: просто три карточки со всеми возможными продуктами: футболка, кружка, брелок(и)
+    1.3. lookbooks: your lookbook(liked products); products lookbook(all products);
+    footer
+  api запросы:
+    route: /api/products/get-filtered-products
+    request_body: filters: { title, }
+    
+    ?route: /api/people-to-contact
+
+2. регистрация/вход(/sign-in-and-up)
+  контент:
+    header
+    sign in, sign up forms;
+    footer
+
+  api запросы:
+    route: /api/auth/sign-in
+    request_body: sign_in_inf: { email, password, }
+
+    route: /api/auth/sign-up
+    request_body: sign_up_inf: { email, name, password, }
+
+3. Lookbook(/lookbooks/product-lookbook)
+  контент:
+    header
+    product card design is on tg(saved messages)
+    footer
+
+  api запросы:
+    /api/products/get-all-products
+
+4. Own lookbook(/lookbooks/own-lookbook)
+  контент:
+    header
+    product card design is on tg(saved messages)
+    footer
+
+5. Product View(/product/:id)
+  api запросы:
+    /api/products/get-product/:id
+
+6. Team
+  контент:
+    header
+    6.1. фотка нас, power rangers
+    6.2. Это наша команда. Мы решили создать проект ...
+    6.3. по списку: каждый член команды и кто за что отвечал:
+      6.3.1. Салий Максим: front-end программист, писал логику для всего сайта
+      6.3.2. Фотка Салия Максима
+      6.3.3. Соц. сети. tg: https://t.me/meranstack, vk: https://vk.com/meranmadeaheat
+      6.3.4. Балкаров Инал: back-end программист, красивый мужчина
+      6.3.5. Фотка Балкарова Инала
+      6.3.6. Соц. сети. tg: https://t.me/p3ckerw00d, vk: https://vk.com/bulbulbulbulbu1
+      6.3.7. Дмитриев Даниил: дизайнер сайта
+      6.3.8. Фотка Дмитриева Даниила
+      6.3.9. Соц. сети. tg: https://t.me/s_i_l_and_l, vk: https://vk.com/s_i_l_s_i_l
+      6.3.10. Мучаев Лиджи: дизайнер мерча, помогал в разработке дизайна сайта
+      6.3.11. Фотка Мучаева Лиджи
+      6.3.12. Соц. сети. tg: https://t.me/Muchaev_l, vk: https://vk.com/muchaev_l
+      6.3.13. Чаленко Никита: Speaker, помогал писать логику
+      6.3.14. Фотка Чаленко Никиты
+      6.3.15. Соц. сети. tg: https://t.me/Ligum1337, vk: https://vk.com/ligum1
+    6.4. Пишите нам в соц. сети, мы всегда открыты к любым предложениям!
+    footer
