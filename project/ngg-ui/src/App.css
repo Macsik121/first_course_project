@@ -1,5 +1,8 @@
+@import url('./styles/style.css');
 .App {
-  text-align: center;
+  /* text-align: center; */
+  /* max-width: 1780px; */
+  margin: 0 auto;
 }
 
 .App-logo {
