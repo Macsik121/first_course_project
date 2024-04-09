@@ -17,7 +17,7 @@ export default function Header({ headerBGcontent, }) {
             Пусто
           </span>
           <img
-            src="./images/image_7.png"
+            src="/images/image_7.png"
             alt="arrow"
             className='arrow-img'
             style={{ filter: "contrast(100)" }}

@@ -7,7 +7,7 @@ import SignInAndUpForm from './components/Sign-in-and-up-form';
 import ProductView from './components/ProductView';
 import LikedProducts from './components/LikedProducts';
 import Footer from './components/Footer';
-import Cart from './components/Cart/Cart';
+import Cart from './components/Cart';
 
 function App() {
   return (

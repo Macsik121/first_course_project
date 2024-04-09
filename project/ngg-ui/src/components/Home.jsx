@@ -1,25 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { jwtDecode } from 'jwt-decode';
+import React, { useState, useEffect } from 'react';
 import ProductCard from './Products/ProductCard'
-import djangoFetch from '../apis/fetch';
-// import { products as productsData } from '../apis/hardcoded_data';
+import { getAllProducts } from '../apis/server-related_apis/server_operations';
 
 export default function Home() {
-  let productsData = [];
-  const [products, setProducts] = useState(productsData || []);
+  const [products, setProducts] = useState([]);
   useEffect(() => {
     (async () => {
-      if (products.length < 1) {
-        const resProducts = await djangoFetch({ url: 'product/get-all-products', });
-        console.log(resProducts);
-        resProducts.push(Object.assign({}, resProducts[0]));
-        resProducts[resProducts.length - 1].id = resProducts.length + 1;
-        resProducts.push(Object.assign({}, resProducts[0]));
-        resProducts[resProducts.length - 1].id = resProducts.length + 1;
-        setProducts(resProducts);
-      }
+      const resProducts = await getAllProducts();
+      setProducts(resProducts);
     })();
-    console.log(jwtDecode(localStorage.getItem('token')));
   }, []);
   const drawnProducts = products.map(product => <ProductCard product={product} key={product.id} />);
   return (

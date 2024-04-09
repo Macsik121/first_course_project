@@ -1,0 +1,19 @@
+.product-view-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-view-images,
+.product-view-content {
+  width: 48%;
+}
+
+.product-images-slider {
+  height: 720px;
+}
+/* 
+.slick-slide div {
+  outline: none;
+  padding: 100px 0;
+  font-size: 1.5rem;
+} */

@@ -1,5 +1,52 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { djangoFetchFreeze } from '../../apis/server-related_apis/fetch';
+
+async function likeProduct(id) {
+  const token = localStorage.getItem('token');
+  await djangoFetchFreeze(document.querySelector('.products'), { url: 'product/like-a-product', method: 'POST', variables: { id, token, }, });
+}
+
+async function addToCart(id) {
+  const token = localStorage.getItem('token');
+  await djangoFetchFreeze(document.querySelector('.products'), { url: 'add-to-cart', method: 'POST', variables: { id, token, }, });
+}
+
+function QuantityController(product, changeProductQuantity) {
+  return (
+    <div className="product-quantity-controller">
+      <input className="product-quantity-controller-display" value={product.amount || 1} onChange={"changeProductQuantity"} />
+      <div className="product-quantity-controller-arrows">
+        <div
+          onClick={() => (
+            changeProductQuantity
+              ? changeProductQuantity(1, product.id)
+              : () => {
+                (async () => await djangoFetchFreeze(document.querySelector('.products'), { url: '' }))();
+              }
+            )
+          }
+          className="product-quantity-controller-arrow arrow-up"
+        >
+          <img style={{ transform: 'rotate(180deg)', }} src="/images/image_7.png" alt="" />
+        </div>
+        <div
+          onClick={() => (
+            changeProductQuantity
+              ? changeProductQuantity(1, product.id)
+              : () => {
+                (async () => await djangoFetchFreeze(document.querySelector('.products'), { url: '' }))();
+              }
+            )
+          }
+          className="product-quantity-controller-arrow arrow-down"
+        >
+            <img src="/images/image_7.png" alt="" />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function ProductCard({
   product,
@@ -12,8 +59,10 @@ export default function ProductCard({
     // description = '',
     // color = [''],
   // },
+  isInCart = false,
+  quantityControllerOn = false,
+  changeProductQuantity,
 }) {
-  console.log('/images/products_images' + product.image_rfs[0]);
   const bgUrl = 'url(/images/products_images' + product.image_rfs[0] + ')';
   return (
     <div className='product-card'>
@@ -26,10 +75,22 @@ export default function ProductCard({
         <h3 className="product-card-title">{product.title}</h3>
         <p className="product-card-short-desc">{product.shortDesc}</p>
         <div className="product-card-hover-functions">
-          <button className="product-card-hover-function-btn product-card-hover-function-btn-cart"><img src="/images/image_11.png" alt="Cart" /></button>
-          <button className="product-card-hover-function-btn product-card-hover-function-btn-like"><img src="/images/image_4.png" alt="Like" /></button>
+          <button onClick={() => addToCart(product.id)} className="product-card-hover-function-btn product-card-hover-function-btn-cart"><img src="/images/image_11.png" alt="Cart" /></button>
+          <button onClick={() => likeProduct(product.id)} className="product-card-hover-function-btn product-card-hover-function-btn-like" title={product.product_liked ? 'Продукт добавлен в понравившиеся' : ''}><img src={product.product_liked ? "/images/filled_heart.png" : "/images/image_4.png"} alt="Like" /></button>
         </div>
       </div>
+      {
+
+      }
+      {isInCart &&
+        <div className="product-quantity-controller">
+          <input className="product-quantity-controller-display" value={product.amount || 1} onChange={"changeProductQuantity"} />
+          <div className="product-quantity-controller-arrows">
+            <div onClick={() => changeProductQuantity(1, product.id)} className="product-quantity-controller-arrow arrow-up"><img style={{ transform: 'rotate(180deg)', }} src="/images/image_7.png" alt="" /></div>
+            <div onClick={() => changeProductQuantity(-1, product.id)} className="product-quantity-controller-arrow arrow-down"><img src="/images/image_7.png" alt="" /></div>
+          </div>
+        </div>
+      }
     </div>
-  )
+  );
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import djangoFetch from '../apis/fetch'
+import { signIn, signUp } from '../apis/server-related_apis/server_operations';
 
 export default function SignInAndUpForm() {
   async function submitSignIn(e) {
@@ -11,8 +11,8 @@ export default function SignInAndUpForm() {
     const password = form.elements['password'].value;
     // console.log('values:', email, password);
     // make the request to the server to get the JWT token
-    const data = await djangoFetch({ url: 'auth/sign-in/', method: 'POST', variables: { email, password, }, });
-    localStorage.setItem('token', data.token ? data.token : localStorage.getItem('token') || '');
+    // const data = 
+    await signIn(email, password);
   }
   async function submitSignUp(e) {
     e.preventDefault();
@@ -21,14 +21,11 @@ export default function SignInAndUpForm() {
     const email = form.elements['email'].value;
     const password = form.elements['password'].value;
     const repPassword = form.elements['repPassword'].value;
-    console.log('email pass:', email, password);
+    // console.log('email pass:', email, password);
     // data responded from the server
-    const result = await djangoFetch({ url: 'sign-up/', method: 'get', variables: { email, password, repPassword, }, });
-    console.log(result);
-    // push token to localStorage
-    if (result.token) {
-      localStorage.setItem('token', result.token);
-    }
+    // const data = 
+    await signUp(email, password, repPassword);
+    // console.log(data);
   }
   return (
     <main className="auth-forms">
@@ -44,7 +41,7 @@ export default function SignInAndUpForm() {
             </div>
           </div>
           <div className="auth-form-bottom-part">
-            <button type="submit" className='default-4'>Войти</button>
+            <button type="submit" className='default-4 default-4-light'>Войти</button>
           </div>
         </form>
         <div className="auth-forms-border-vertical border-line border-line-vertical" />
@@ -63,7 +60,7 @@ export default function SignInAndUpForm() {
             </div>
           </div>
           <div className="auth-form-bottom-part">
-            <button type="submit" className='default-4'>Зарегестрироваться</button>
+            <button type="submit" className='default-4 default-4-light'>Зарегестрироваться</button>
           </div>
         </form>
       </section>
