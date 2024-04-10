@@ -1,6 +1,13 @@
 .product-view-wrap {
   display: flex;
   justify-content: space-between;
+  color: #c0c0c0;
+  font-size: 1.2rem;
+  --product-view-margin-top: 25px;
+}
+
+.product-view-wrap h3 {
+  font-size: 1.6rem;
 }
 
 .product-view-images,
@@ -8,12 +15,97 @@
   width: 48%;
 }
 
+/* product-view-images */
+
 .product-images-slider {
   height: 720px;
 }
-/* 
-.slick-slide div {
-  outline: none;
-  padding: 100px 0;
-  font-size: 1.5rem;
-} */
+
+/* product-view-content */
+
+.product-view-cost {
+  font-size: 2.5rem;
+  margin-top: var(--product-view-margin-top);
+}
+
+.product-view-general-inf {
+  margin-top: calc(var(--product-view-margin-top) * 2 - 15px);
+}
+
+.product-view-general-inf-label-wrap {
+  color: #575153;
+}
+
+.product-view-general-inf-label-wrap::after {
+  content: ':';
+}
+
+.product-view-desc {
+  margin-top: calc(var(--product-view-margin-top) * 2);
+}
+
+.product-view-desc-text {
+  line-height: 26px;
+  filter: invert(.4);
+}
+
+.product-view-add-to-cart-options {
+  margin-top: calc(var(--product-view-margin-top) * 2);
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-view-add-too-cart-option {
+  width: fit-content;
+}
+
+.product-view-add-to-cart-option-func {
+  margin-top: 15px;
+  padding-right: 25px;
+  height: 45px;
+  background: transparent;
+  color: inherit;
+  border: 2px solid #c0c0c0;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, .6);
+  padding-left: 10px;
+}
+
+.product-view .product-quantity-controller {
+  position: static;
+  max-width: calc(var(--input-width) * 2);
+  padding-left: 0;
+  --input-width: 60px;
+}
+
+.product-view .product-quantity-controller-display {
+  width: var(--input-width);
+  background: transparent;
+  filter: invert(1);
+  border-width: 2px;
+}
+
+.product-view .product-quantity-controller-arrow {
+  width: var(--input-width);
+  filter: invert(1);
+  border-width: 2px;
+}
+
+.product-view .product-quantity-controller .arrow-down {
+  border-top: none;
+}
+
+.product-view-bottom-buttons {
+  margin-top: calc(var(--product-view-margin-top) * 2);
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-view-wrap .default-4 {
+  color: inherit;
+}
+
+.product-view-wrap .default-4 .product-view-bottom-button-label {
+  color: inherit;
+  margin-left: 15px;
+}

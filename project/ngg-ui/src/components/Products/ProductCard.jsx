@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { djangoFetchFreeze } from '../../apis/server-related_apis/fetch';
+import QuantityController from './QuantityController';
 
 async function likeProduct(id) {
   const token = localStorage.getItem('token');
@@ -10,42 +11,6 @@ async function likeProduct(id) {
 async function addToCart(id) {
   const token = localStorage.getItem('token');
   await djangoFetchFreeze(document.querySelector('.products'), { url: 'add-to-cart', method: 'POST', variables: { id, token, }, });
-}
-
-function QuantityController(product, changeProductQuantity) {
-  return (
-    <div className="product-quantity-controller">
-      <input className="product-quantity-controller-display" value={product.amount || 1} onChange={"changeProductQuantity"} />
-      <div className="product-quantity-controller-arrows">
-        <div
-          onClick={() => (
-            changeProductQuantity
-              ? changeProductQuantity(1, product.id)
-              : () => {
-                (async () => await djangoFetchFreeze(document.querySelector('.products'), { url: '' }))();
-              }
-            )
-          }
-          className="product-quantity-controller-arrow arrow-up"
-        >
-          <img style={{ transform: 'rotate(180deg)', }} src="/images/image_7.png" alt="" />
-        </div>
-        <div
-          onClick={() => (
-            changeProductQuantity
-              ? changeProductQuantity(1, product.id)
-              : () => {
-                (async () => await djangoFetchFreeze(document.querySelector('.products'), { url: '' }))();
-              }
-            )
-          }
-          className="product-quantity-controller-arrow arrow-down"
-        >
-            <img src="/images/image_7.png" alt="" />
-        </div>
-      </div>
-    </div>
-  );
 }
 
 export default function ProductCard({
@@ -69,7 +34,7 @@ export default function ProductCard({
       <div className="product-card-top-part product-card-part">
         <span className="product-card-cost"><sup>&#8381;</sup>{product.cost}</span>
         <div style={{ backgroundImage: bgUrl, }} className='product-card-bg' />
-        <Link to={"view-product/" + product.id} className="product-card-product-view-ref"></Link>
+        <Link to={"/view-product/" + product.id} className="product-card-product-view-ref"></Link>
       </div>
       <div className="product-card-bottom-part product-card-part">
         <h3 className="product-card-title">{product.title}</h3>
@@ -79,17 +44,11 @@ export default function ProductCard({
           <button onClick={() => likeProduct(product.id)} className="product-card-hover-function-btn product-card-hover-function-btn-like" title={product.product_liked ? 'Продукт добавлен в понравившиеся' : ''}><img src={product.product_liked ? "/images/filled_heart.png" : "/images/image_4.png"} alt="Like" /></button>
         </div>
       </div>
-      {
-
+      {quantityControllerOn &&
+        <QuantityController product={product} changeProductQuantity={''} />
       }
       {isInCart &&
-        <div className="product-quantity-controller">
-          <input className="product-quantity-controller-display" value={product.amount || 1} onChange={"changeProductQuantity"} />
-          <div className="product-quantity-controller-arrows">
-            <div onClick={() => changeProductQuantity(1, product.id)} className="product-quantity-controller-arrow arrow-up"><img style={{ transform: 'rotate(180deg)', }} src="/images/image_7.png" alt="" /></div>
-            <div onClick={() => changeProductQuantity(-1, product.id)} className="product-quantity-controller-arrow arrow-down"><img src="/images/image_7.png" alt="" /></div>
-          </div>
-        </div>
+        <QuantityController product={product} changeProductQuantity={'() => {}'} />
       }
     </div>
   );

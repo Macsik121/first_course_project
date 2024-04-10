@@ -6,7 +6,10 @@ const InalIsGood = false;
 // get requests
 
 export async function getAllProducts() {
-  const data = await djangoFetch({ url: 'product/get-all-products', });
+  const data = (
+    hardcodedProducts ||
+    await djangoFetch({ url: 'products/get-all-products', })
+  );
   if (InalIsGood) return data;
   else {
     if (!data.length) return hardcodedProducts;

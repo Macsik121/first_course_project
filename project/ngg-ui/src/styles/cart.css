@@ -28,6 +28,7 @@
   display: flex;
   transition: 500ms;
   transition-delay: 100ms;
+  border: none;
 }
 
 .cart-product-card:hover .product-quantity-controller {
@@ -41,6 +42,7 @@
   height: 45px;
   display: flex;
   justify-content: center;
+  padding-left: 5px;
   align-items: center;
   font-size: inherit;
 }
@@ -74,6 +76,23 @@
 
 .cart-buy-button {
   margin-top: 25px;
+}
+
+.slick-arrow::before {
+  display: none;
+}
+
+.product-image > div {
+  background-size: cover;
+  background-position: center;
+}
+
+.product-card-product-view-ref {
+  z-index: 2;
+}
+
+.slick-dots li {
+  filter: invert(1);
 }
 
 @media (max-width: 1800px) {
