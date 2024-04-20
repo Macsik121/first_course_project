@@ -85,7 +85,6 @@ export default function ProductView() {
                   <select className='product-view-add-to-cart-option-func' name="add_to_cart_color_opt">
                     <option selected value="default">Выберите цвет</option>
                     <option value="Ты не мой белый, нет, ты не мой белый">Белый</option>
-                    <option value="Зелёный">Зелёный</option>
                   </select>
                 </div>
                 <div className="product-view-add-to-cart-option product-view-add-to-cart-option-color">

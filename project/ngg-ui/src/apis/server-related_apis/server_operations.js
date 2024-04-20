@@ -10,28 +10,28 @@ export async function getAllProducts() {
     hardcodedProducts ||
     await djangoFetch({ url: 'products/get-all-products', })
   );
-  if (InalIsGood) return data;
-  else {
-    if (!data.length) return hardcodedProducts;
-    else {
-      // data[0].description = 'Футболка';
-      data[0].cost = 499.23;
-      data[0].shortDesc = '12=3-12-09408403-';
-      data[0].color = [''];
-      data[0].image_rfs = ['/t-shirt/t-shirt-main.jpg',];
-      // data[1].description = 'Описание';
-      data[1].cost = 300.90;
-      data[1].shortDesc = '12=3-12-09408403-';
-      data[1].color = [''];
-      data[1].image_rfs = ['/cup_images/cup-main.jpg',];
-      // data[2].description = 'бролкъ';
-      data[2].shortDesc = '12=3-12-09408403-';
-      data[2].cost = 149.99;
-      data[2].color = [''];
-      data[2].image_rfs = ['/keychain.jpg',];
-      return data;
-    }
-  }
+  return data;
+  // else {
+  //   if (!data.length) return hardcodedProducts;
+  //   else {
+  //     // data[0].description = 'Футболка';
+  //     data[0].cost = 499.23;
+  //     data[0].shortDesc = '12=3-12-09408403-';
+  //     data[0].color = [''];
+  //     data[0].image_rfs = ['/t-shirt/t-shirt-main.jpg',];
+  //     // data[1].description = 'Описание';
+  //     data[1].cost = 300.90;
+  //     data[1].shortDesc = '12=3-12-09408403-';
+  //     data[1].color = [''];
+  //     data[1].image_rfs = ['/cup_images/cup-main.jpg',];
+  //     // data[2].description = 'бролкъ';
+  //     data[2].shortDesc = '12=3-12-09408403-';
+  //     data[2].cost = 149.99;
+  //     data[2].color = [''];
+  //     data[2].image_rfs = ['/keychain.jpg',];
+  //     return data;
+  //   }
+  // }
 }
 
 export async function getProduct(id) {
